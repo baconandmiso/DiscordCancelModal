@@ -4,9 +4,7 @@ global using Discord.WebSocket;
 
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
-
-using DiscordBot_Template.Services;
-
+using DiscordCancelModal.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

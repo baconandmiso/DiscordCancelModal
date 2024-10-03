@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
 
-namespace DiscordBot_Template.Services;
+namespace DiscordCancelModal.Services;
 
 public class InteractionHandler(DiscordSocketClient client, InteractionService interactions, IServiceProvider services, ILogger<InteractionHandler> logger)
 {
     public async Task InitializeAsync()
     {
         await interactions.AddModulesAsync(Assembly.GetEntryAssembly(), services);
-    
+
         client.InteractionCreated += OnInteractionCreated;
         interactions.InteractionExecuted += OnInteractionExecuted;
     }
@@ -22,7 +22,7 @@ public class InteractionHandler(DiscordSocketClient client, InteractionService i
             if (!result.IsSuccess)
                 _ = Task.Run(() => InteractionExecutedResult(interaction, result));
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
         }

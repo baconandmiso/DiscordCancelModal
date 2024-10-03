@@ -1,4 +1,4 @@
-﻿namespace DiscordBot_Template.Modules;
+﻿namespace DiscordCancelModal.Modules;
 
 public class PingModule : InteractionModuleBase<SocketInteractionContext>
 {

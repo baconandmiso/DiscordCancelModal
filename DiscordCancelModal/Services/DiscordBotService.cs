@@ -1,14 +1,14 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace DiscordBot_Template.Services;
+namespace DiscordCancelModal.Services;
 
-public class DiscordBotService(DiscordSocketClient client, InteractionService interactions, IConfiguration config, ILogger<DiscordBotService> logger, 
+public class DiscordBotService(DiscordSocketClient client, InteractionService interactions, IConfiguration config, ILogger<DiscordBotService> logger,
     InteractionHandler interactionHandler) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
         client.Ready += OnReady;
-        
+
         client.Log += Log;
         interactions.Log += Log;
 
@@ -49,16 +49,17 @@ public class DiscordBotService(DiscordSocketClient client, InteractionService in
 
     private Task OnReady()
     {
-        _ = Task.Run(async () => {
+        _ = Task.Run(async () =>
+        {
             try
             {
-                #if DEBUG
-                    var guild = client.Guilds.FirstOrDefault(x => x.Id.ToString() == config["Discord:GuildId"]);
-                    if (guild != null)
-                        await interactions.RegisterCommandsToGuildAsync(guild.Id);
-                #elif RELEASE
+#if DEBUG
+                var guild = client.Guilds.FirstOrDefault(x => x.Id.ToString() == config["Discord:GuildId"]);
+                if (guild != null)
+                    await interactions.RegisterCommandsToGuildAsync(guild.Id);
+#elif RELEASE
                     await interactions.RegisterCommandsGloballyAsync();
-                #endif
+#endif
             }
             catch (Exception ex)
             {
